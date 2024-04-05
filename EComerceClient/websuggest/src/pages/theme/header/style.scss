@@ -1,0 +1,38 @@
+@use "sass:map";
+@import "./src/style/pages/theme";
+
+.header-top {
+    background: map.get($theme-colors,"header");
+}
+.header-top-left {
+
+    ul{
+        display: flex;
+        list-style: none;
+        align-items: center;
+        padding: 10px 0 13px;
+        li{
+            font-size: 14px;
+            color: map.get($theme-colors,"main");
+            display: flex;
+            align-items: center;
+            column-gap:2px;
+        }
+    }
+}
+.header-top-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 0 13px;
+    ul{
+        display: flex;
+        column-gap: 5px;
+        list-style: none;
+        a {
+            font-size: 14px;
+            display: inline-block;
+            color: map.get($theme-colors,"main");
+        }
+    }
+}
