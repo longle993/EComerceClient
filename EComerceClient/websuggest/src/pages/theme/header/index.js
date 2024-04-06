@@ -1,10 +1,50 @@
-import {memo} from 'react';
+import {Children, memo, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './style.scss';
-import { FaFacebook,FaInstagram,FaLinkedin  } from "react-icons/fa";
-import { IoMdMail } from "react-icons/io";
+import { FaFacebook,FaInstagram,FaLinkedin,FaShoppingCart   } from "react-icons/fa";
+import { IoMdMail  } from "react-icons/io";
+import { IoMenu } from "react-icons/io5";
+import { formater } from 'utills/formater';
+import { ROUTERS } from 'utills/router';
 
 const Header = () => {
+    const [isShowCategories,setShowCategories] = useState(true)
+    const [menus, setMenus] = useState([
+        {
+            name: 'Trang chủ',
+            path: ROUTERS.USER.HOME
+        },
+        {
+            name: 'Lịch sử mua hàng',
+            path: ROUTERS.USER.HISTORY
+        },
+        {
+            name: 'Sản phẩm',
+            path: ROUTERS.USER.PRODUCTS,
+            isShowSubmenu: false,
+            child:[{
+                name:'Laptop',
+                path:'',
+            },
+            {
+                name:'Điện thoại',
+                path:'',
+            },
+            {
+                name:'Tablet',
+                path:'',
+            },
+            {
+                name:'Đồng hồ',
+                path:'',
+            },
+            {
+                name:'Phụ kiện',
+                path:'',
+            }           
+        ]
+        }
+    ])
     return (
         <>
         <div className='header-top'>
@@ -43,13 +83,90 @@ const Header = () => {
         </div>
         <div className='container'>
             <div className='row'>
-                <div className='col-xl-3 col-lg-3'>LOGO</div>
-                <div className='col-xl-6 col-lg-6'>MENUS</div>
-                <div className='col-xl-3 col-lg-3'>PHONE</div>
+                <div className='col-xl-3'>
+                    <div className='header-logo'>
+                        <h1>Elec Shop</h1>
+                    </div>
+                </div>
+                <div className='col-xl-6'>
+                    <nav className='header-menu'>
+                        <ul>
+                            {
+                                menus?.map((menu, menuKey) => (
+                                    <li key = {menuKey} className={menuKey === 0? 'active': ''}>
+                                        <Link to={menu?.path}>{menu.name}</Link>
+                                        {
+                                            menu.child && (
+                                                <ul className='header-dropdown-menu'>
+                                                    {
+                                                        menu.child.map((childItem,childKey) => (
+                                                            <li key={`${menuKey} - ${childKey}`}>
+                                                                <Link to={childItem.path}>{childItem.name}</Link>
+                                                            </li>
+                                                        ))
+                                                    }
+                                                    
+                                                </ul>
+                                            )
+                                        }
+                                    </li>
+                                ))
+                            }
+
+                        </ul>
+                    </nav>
+                </div>
+                <div className='col-xl-3'>
+                    <div className='header-cart'>
+                        <div className='header-cart-price'>
+                            <span>{formater(100000)}</span>
+                        </div>
+                        <ul>
+                        <li>
+                            <Link to={""}>
+                                <FaShoppingCart/>
+                                <span>10</span>
+                            </Link>
+                        </li>
+                    </ul>
+                    </div>
+                    
+                </div>
 
             </div>
         </div>
-        
+        <div className='container'>
+            <div className='row categories-container'>
+                <div className='col-lg-3 categories'>
+                    <div className='categories-all' onClick={() => setShowCategories(!isShowCategories)}>
+                        <IoMenu />
+                        Danh sách sản phẩm
+                    </div>
+                    {isShowCategories && (
+                        <ul className={isShowCategories ? '' : 'hidden'}>
+                            <li>
+                                <Link to={'#'}>Laptop</Link>
+                            </li>
+                            <li>
+                                <Link to={'#'}>Điện thoại</Link>
+                            </li>
+                            <li>
+                                <Link to={'#'}>Tablet</Link>
+                            </li>
+                            <li>
+                                <Link to={'#'}>Đồng hồ</Link>
+                            </li>
+                            <li>
+                                <Link to={'#'}>Phụ kiện</Link>
+                            </li>
+                        </ul>
+                    )}
+                    
+                </div>
+                <div className='col-lg-9'>Phai</div>
+
+            </div>
+        </div>
         </>
         
     );

@@ -36,3 +36,147 @@
         }
     }
 }
+
+.header-logo {
+    padding: 15px 0;
+}
+
+.header-menu{
+    padding:24px 0;
+    ul{
+        display: flex;
+        justify-content: space-between;
+        .active a{
+            color: map.get($theme-colors,"header");
+        }
+        li{
+            list-style: none;
+            position: relative;
+            a{
+                text-decoration: none;
+                font-size: 14px;
+                color: map.get($theme-colors,"main");
+                text-transform: uppercase;
+                font-weight: bold;
+                letter-spacing: 2px;
+                transition: all 0.3s;
+                padding: 5px 0;
+                display: block;
+            }
+        }
+        li:hover .header-dropdown-menu{
+            opacity: 1;
+            visibility: visible;
+
+        }
+
+        .header-dropdown-menu {
+            background: map.get($theme-colors,"main");
+            display: block;
+            position: absolute;
+            width: 180px;
+            z-index: 9;
+            padding: 5px 0;
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            li{
+                a {
+                    text-transform: capitalize;
+                    color: #ffffff;
+                    font-weight: 400;
+                    padding: 5px 15px;
+                }
+                :hover{
+                    color: map.get($theme-colors,"icon-color");
+                }
+            }
+        }
+    }
+}
+
+.header-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 0;
+    ul{
+        display: flex;
+        position: relative;
+        margin-right: 25px;
+        li{
+            list-style: none;
+            margin-left: 20px;
+            svg{
+                font-size: 25px;
+                color: #000;
+            }
+            span{
+                color: map.get($theme-colors,"text-in-dark");
+                background: map.get($theme-colors,"main");
+                position: absolute;
+                height: 20px;
+                width: 20px;
+                border-radius: 30px;
+                display: inline-block;
+                line-height: 20px;
+                font-size: 11px;
+                text-align: center;
+                font-weight: 500;
+                left: 40px;
+                top: -6px;
+            }
+        }
+    }
+}
+
+.categories{
+    position: relative;
+    .categories-all {
+        background: map.get($theme-colors,'icon-color');
+        padding: 15px 25px 15px 40px;
+        display: flex;
+        align-items: center;
+        color: map.get($theme-colors,'text-in-dark');
+        font-weight: 700;
+        cursor: pointer;
+        svg, span {
+            font-size: 15px;
+            margin-right: 5px;
+        }
+        svg {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    ul {
+        position: absolute;
+        opacity: 1;
+        border: 1px solid #f5f5f5;
+        width: 99%;
+        background: map.get($theme-colors,'text-in-dark');
+        transition: all 0.3s;
+        li{
+            list-style: none;
+            a {
+                text-decoration: none;
+                background-color: transparent;
+                font-size: 14px;
+                color: map.get($theme-colors,'main');
+                line-height: 39px;
+                display: block;
+                padding-left: 40px;
+            }
+            :hover{
+                background: map.get($theme-colors,'main');
+                color: map.get($theme-colors,'text-in-dark');
+            }
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+    }
+}
+

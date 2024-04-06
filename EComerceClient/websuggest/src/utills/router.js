@@ -1,6 +1,8 @@
 export const ROUTERS = {
     USER: {
-        HOME: 'homepage',
-        PROFILE: 'profile'
+        HOME: '',
+        PROFILE: 'profile',
+        PRODUCTS: '/san-pham',
+        HISTORY: 'history'
     }
 }
