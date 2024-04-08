@@ -1,7 +1,7 @@
 import {Children, memo, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './style.scss';
-import { FaFacebook,FaInstagram,FaLinkedin,FaShoppingCart   } from "react-icons/fa";
+import { FaFacebook,FaInstagram,FaLinkedin,FaShoppingCart,FaPhone    } from "react-icons/fa";
 import { IoMdMail  } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { formater } from 'utills/formater';
@@ -163,7 +163,34 @@ const Header = () => {
                     )}
                     
                 </div>
-                <div className='col-lg-9'>Phai</div>
+                <div className='col-lg-9 search-container'>
+                    <div className='search'>
+                        <div className='search-form'>
+                            <form>
+                                <input type='text' placeholder='Bạn đang tìm gì?'/>
+                                <button type='submit'>Tìm kiếm</button>
+                            </form>
+                        </div>
+                        <div className='search-phone'>
+                            <div className='search-phone-icon'>
+                                <FaPhone />
+                            </div>
+                            <div className='search-phone-text'>
+                                <p>0879511207</p>
+                                <span>Hỗ trợ 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='item'>
+                    <div className='item-text'>
+                        <span>Đồ Điện tử</span>
+                        <h2>Uy tín <br/>
+                        100%</h2>
+                        <p>Miễn phí giao hàng tận nơi</p>
+                        <Link to={'#'} className='primary-btn'>Mua ngay</Link>
+                    </div>
+                </div>
 
             </div>
         </div>
