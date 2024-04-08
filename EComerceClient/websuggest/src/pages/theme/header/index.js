@@ -181,17 +181,16 @@ const Header = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className='item'>
-                    <div className='item-text'>
-                        <span>Đồ Điện tử</span>
-                        <h2>Uy tín <br/>
-                        100%</h2>
-                        <p>Miễn phí giao hàng tận nơi</p>
-                        <Link to={'#'} className='primary-btn'>Mua ngay</Link>
+                    <div className='item'>
+                        <div className='item-text'>
+                            <span>Thiết bị thông minh</span>
+                            <h2>Hiện đại <br/>
+                            Phong cách</h2>
+                            <p>Miễn phí giao hàng tận nơi</p>
+                            <Link to={'#'} className='primary-btn'>Mua ngay</Link>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
         </>
