@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './style.scss';
 import {memo} from 'react';
-import { FaFacebook,FaInstagram,FaLinkedin,FaShoppingCart   } from "react-icons/fa";
+import { FaFacebook,FaInstagram,FaLinkedin   } from "react-icons/fa";
 
 
 const Footer = () => {
