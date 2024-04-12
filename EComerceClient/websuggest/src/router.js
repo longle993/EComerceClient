@@ -2,7 +2,8 @@ import {Routes, Route} from 'react-router-dom';
 import HomePage from './pages/homePages';
 import { ROUTERS } from './utills/router';
 import MasterLayout from './pages/theme/masterLayout';
-import ProfilePage from './pages/profilePages';
+import Cart from './pages/cartPages';
+import History from './pages/historyPages';
 
 
 const renderUserRouter = () => {
@@ -12,8 +13,12 @@ const renderUserRouter = () => {
             component: <HomePage/>
         },
         {
-            path: ROUTERS.USER.PROFILE,
-            component: <ProfilePage/>
+            path: ROUTERS.USER.CART,
+            component: <Cart/>
+        },
+        {
+            path: ROUTERS.USER.HISTORY,
+            component: <History/>
         }
     ]
 

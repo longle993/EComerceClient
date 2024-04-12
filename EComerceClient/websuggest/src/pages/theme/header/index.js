@@ -1,4 +1,4 @@
-import {Children, memo, useState} from 'react';
+import {Children, memo, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './style.scss';
 import { FaFacebook,FaInstagram,FaLinkedin,FaShoppingCart,FaPhone    } from "react-icons/fa";
@@ -6,8 +6,29 @@ import { IoMdMail  } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { formater } from 'utills/formater';
 import { ROUTERS } from 'utills/router';
+import { getProductType } from 'api/ProductsApi';
 
 const Header = () => {
+    const [productType,setProductType] = useState ([]);
+    useEffect(()=> {
+        const fetchData = async() => {
+            try {
+                const response = await getProductType();
+                setProductType(response.data);
+            }
+            catch(exception){
+                console.log(exception);
+            }
+        };
+
+        fetchData();
+    },[])
+
+    const [countProduct,setCount] = useState(0);
+    const addtoCart = (newCountProduct) => {
+        setCount(newCountProduct);
+    }
+
     const [isShowCategories,setShowCategories] = useState(true)
     const [menus, setMenus] = useState([
         {
@@ -19,30 +40,30 @@ const Header = () => {
             path: ROUTERS.USER.HISTORY
         },
         {
-            name: 'Sản phẩm',
-            path: ROUTERS.USER.PRODUCTS,
-            isShowSubmenu: false,
-            child:[{
-                name:'Laptop',
-                path:'',
-            },
-            {
-                name:'Điện thoại',
-                path:'',
-            },
-            {
-                name:'Tablet',
-                path:'',
-            },
-            {
-                name:'Đồng hồ',
-                path:'',
-            },
-            {
-                name:'Phụ kiện',
-                path:'',
-            }           
-        ]
+            name: 'Giỏ hàng',
+            path: ROUTERS.USER.CART
+        //     isShowSubmenu: false,
+        //     child:[{
+        //         name:'Laptop',
+        //         path:'',
+        //     },
+        //     {
+        //         name:'Điện thoại',
+        //         path:'',
+        //     },
+        //     {
+        //         name:'Tablet',
+        //         path:'',
+        //     },
+        //     {
+        //         name:'Đồng hồ',
+        //         path:'',
+        //     },
+        //     {
+        //         name:'Phụ kiện',
+        //         path:'',
+        //     }           
+        // ]
         }
     ])
     return (
@@ -125,7 +146,7 @@ const Header = () => {
                         <li>
                             <Link to={""}>
                                 <FaShoppingCart/>
-                                <span>10</span>
+                                <span>{countProduct}</span>
                             </Link>
                         </li>
                     </ul>
