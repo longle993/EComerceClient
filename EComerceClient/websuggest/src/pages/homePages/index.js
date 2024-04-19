@@ -9,35 +9,34 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { IoEyeOutline } from "react-icons/io5";
 import { FaShoppingCart    } from "react-icons/fa";
-import { formater } from 'utills/formater';
-import { getAllProducts,getProductType,getProductByType } from 'api/ProductsApi';
-import Header from 'pages/theme/header';
-
+import { formater } from 'utils/formater';
+import { getProductType,getFrequentProduct} from 'api/ProductsApi';
+import { useCartContext } from 'utils/Context';
+import { ROUTERS } from 'utils/router';
 
 
 const HomePage = () => {
-  
-
     const [products, setProducts] = useState([]);
     const [listType, setType] = useState([]);
     const [featProducts, setFeatProducts] = useState({}); // Sử dụng useState để cập nhật featProducts
-    const cart = [];
+    const {cart, setCart,price,setPrice,setCount} = useCartContext();
+
     useEffect(() => {
       const fetchData = async () => {
         try {
-          //Get All product
-          const response = await getAllProducts();
-          const products = JSON.parse(response.data);
-          setProducts(products);
-    
+          //Get Frequence Product
+          const responseFrequence = await getFrequentProduct();
+          const frequenceProducts = responseFrequence.data;
+          setProducts(frequenceProducts);
+
           //Get All Type
           const responseType = await getProductType();
           const types = responseType.data;
-    
+
           const featProductsTitle = {}; 
     
           types.forEach((item) => {
-            const filterProducts = products?.$values.filter(product => product.IdLoaiSp === item.idLoaiSp)
+            const filterProducts = frequenceProducts?.filter(product => product.idLoaiSp === item.idLoaiSp)
 
             featProductsTitle[item.idLoaiSp] = {
               title: item.loaiSp,
@@ -50,7 +49,7 @@ const HomePage = () => {
           setFeatProducts({
             all: {
               title: 'Toàn bộ',
-              listProducts: products?.$values || []
+              listProducts: frequenceProducts || []
             },
             ...featProductsTitle
           });
@@ -61,32 +60,24 @@ const HomePage = () => {
     
       fetchData();
     }, []);  
-
-    const responsive = {
-      superLargeDesktop: {
-        breakpoint: { max: 4000, min: 3000 },
-        items: 5
-      },
-      desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4
-      },
-      tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2
-      },
-      mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1
+    useEffect(() => {
+      const count = cart.length;
+      setCount(count);
+      let currentPrice = 0;
+      if (products) { 
+        for (let i = 0; i < cart.length; i++) {
+          const currentProduct = products.find(item => item.idSanPham == cart[i]);
+          if (currentProduct) { 
+            currentPrice += currentProduct.giaSp;
+          }
+        }
       }
-    };
+      setPrice(currentPrice);
+    }, [cart, products]);
 
-    
-    
     const renderFeatProducts = (data) => {
       const tabList  = [];
       const tabPanels = [];
-      console.log(featProducts);
       
       Object.keys(data).forEach((key,index) => {
         tabList.push(<Tab key={index}>{data[key].title}</Tab>);
@@ -98,15 +89,17 @@ const HomePage = () => {
               <div className='featured-item'>
                 <div className='featured-item-pic'
                 style={{
-                  backgroundImage: `url(${item.HinhAnh.$values[0]})`
+                  backgroundImage: `url('')`
                 }}>
                   <ul className='featured-item-pic-hover  '>
                     <li>
-                      <IoEyeOutline/>
+                      <Link to={`${ROUTERS.USER.PRODUCTS}/${item.idSanPham}`}>
+                        <IoEyeOutline/>
+                      </Link>
                     </li>
                     <li onClick={() => {
-                      cart.push(item.IdSanPham);
-                      console.log(cart);
+                      const updatedCart = [...cart, item.idSanPham];
+                      setCart(updatedCart)
                     }}>
                       <FaShoppingCart/>
                     </li>
@@ -114,9 +107,9 @@ const HomePage = () => {
                 </div>
                 <div className='featured-item-text'>
                     <h6>
-                      <Link to={'#'}>{item.TenSanPham}</Link>
+                      <Link to={'#'}>{item.tenSanPham}</Link>
                     </h6>
-                    <h5>{formater(item.GiaSp)}</h5>
+                    <h5>{formater(item.giaSp)}</h5>
                 </div>
               </div>
             </div>
@@ -150,22 +143,15 @@ const HomePage = () => {
         {/* Categories Begin */}
         
             <div className='container container-categories-slider'>
-                <Carousel responsive={responsive} className='categories-slider'>
-                    <div className='categories-slider-item'
-                    style={{backgroundImage: `url(${$bannerImg})`}}
-                    ><p>Acer Nitro 5</p></div>
-                    <div className='categories-slider-item'
-                    style={{backgroundImage: `url(${$bannerImg})`}}
-                    ><p>Acer Nitro 5</p></div><div className='categories-slider-item'
-                    style={{backgroundImage: `url(${$bannerImg})`}}
-                    ><p>Acer Nitro 5</p></div>
-                    <div className='categories-slider-item'
-                    style={{backgroundImage: `url(${$bannerImg})`}}
-                    ><p>Acer Nitro 5</p></div>
-                    <div className='categories-slider-item'
-                    style={{backgroundImage: `url(${$bannerImg})`}}
-                    ><p>Acer Nitro 5</p></div>
-                </Carousel>
+            {/* <Carousel responsive={responsive} className='categories-slider'>
+                  {
+                    products?.$values.map((item,index)=> (
+                      <div key = {index} className='categories-slider-item'
+                      style={{backgroundImage: `url(${item.HinhAnh.$values[0]})`}}
+                      ><p>{item.TenSanPham}</p></div>
+                    ))
+                  }
+                </Carousel> */}
             </div>
         {/* Categories End */}
         {/* FeatureBegin */}
@@ -184,10 +170,10 @@ const HomePage = () => {
           <div className='container'>
             <div className='banner'>
               <div className='banner-pic'>
-                <img src='https://media.wired.com/photos/62311bfde5e91991368ff6e5/3:2/w_2400,h_1600,c_limit/Apple-iPad-Air-2022-Review-Gear.jpg' alt = 'banner'/>
+                <img src='https://png.pngtree.com/background/20230525/original/pngtree-3d-grocery-store-with-orange-goods-in-the-background-picture-image_2738856.jpg' alt = 'banner'/>
               </div>
               <div className='banner-pic'>
-                <img src='https://media.wired.com/photos/6580812d2c05e7fb0bdf4968/16:9/w_2400,h_1350,c_limit/Apple-suspending-sales-of-the-Apple-Watch-Gear-GettyImages-1683405578.jpg' alt = 'banner'/>
+                <img src='https://previews.123rf.com/images/drogatnev/drogatnev1710/drogatnev171000048/87355938-supermarket-store-interior-with-goods-big-shopping-mall-interior-store-inside.jpg' alt = 'banner'/>
               </div>
             </div>
           </div>

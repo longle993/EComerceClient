@@ -4,12 +4,16 @@ import './style.scss';
 import { FaFacebook,FaInstagram,FaLinkedin,FaShoppingCart,FaPhone    } from "react-icons/fa";
 import { IoMdMail  } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
-import { formater } from 'utills/formater';
-import { ROUTERS } from 'utills/router';
+import { formater } from 'utils/formater';
+import { ROUTERS } from 'utils/router';
 import { getProductType } from 'api/ProductsApi';
+import { useCartContext } from 'utils/Context';
+
 
 const Header = () => {
+    const {price,setPrice,countProduct,setCount} = useCartContext();
     const [productType,setProductType] = useState ([]);
+
     useEffect(()=> {
         const fetchData = async() => {
             try {
@@ -23,11 +27,6 @@ const Header = () => {
 
         fetchData();
     },[])
-
-    const [countProduct,setCount] = useState(0);
-    const addtoCart = (newCountProduct) => {
-        setCount(newCountProduct);
-    }
 
     const [isShowCategories,setShowCategories] = useState(true)
     const [menus, setMenus] = useState([
@@ -140,13 +139,13 @@ const Header = () => {
                 <div className='col-xl-3'>
                     <div className='header-cart'>
                         <div className='header-cart-price'>
-                            <span>{formater(100000)}</span>
+                            <span>{formater(price)}</span>
                         </div>
                         <ul>
                         <li>
                             <Link to={""}>
                                 <FaShoppingCart/>
-                                <span>{countProduct}</span>
+                                <span id='countItemCart'>{countProduct}</span>
                             </Link>
                         </li>
                     </ul>
@@ -156,7 +155,7 @@ const Header = () => {
 
             </div>
         </div>
-        <div className='container'>
+        {/* <div className='container'>
             <div className='row categories-container'>
                 <div className='col-lg-3 categories'>
                     <div className='categories-all' onClick={() => setShowCategories(!isShowCategories)}>
@@ -213,7 +212,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
         </>
         
     );

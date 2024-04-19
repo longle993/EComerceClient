@@ -1,0 +1,33 @@
+@use "sass:map";
+@import "./src/style/pages/theme";
+
+.formBill {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid map.get($theme-colors,'header');
+    border-radius: 10px;
+}
+h3 {
+    font-size: 20px;
+    text-transform: uppercase;
+    line-height: 80px;
+}
+.listItem{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 75px;
+    width: 100%;
+    ul {
+    
+        li{
+            list-style: none;
+            margin-bottom: 15px;
+            font-weight: 400;
+            color: map.get($theme-colors,'main');
+        }
+    }
+}

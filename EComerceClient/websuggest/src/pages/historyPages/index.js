@@ -1,7 +1,7 @@
-import { Link, resolvePath } from 'react-router-dom';
+import { Link, json, resolvePath } from 'react-router-dom';
 import './style.scss';
 import {memo, useEffect,useState} from 'react';
-import { formater } from 'utills/formater';
+import { formater } from 'utils/formater';
 import { getAllBill } from 'api/BillsApi';
 
 
@@ -16,13 +16,36 @@ const History = () => {
         fetchData();
     },[]);
 
-    useEffect(()=> {
-        console.log(bills)
-    },[bills]);
 
     return (
         <>
-            <h1>History Pages</h1>
+            <div className='container'>
+                {
+                    bills?.map((item,index)=> {
+                        const jsonObject = JSON.parse(item.sanPham);
+
+                        return(
+                        <div key={index} className='row'>
+                            <div className='formBill'>
+                                <h3>Mã hoá đơn: {item.idHoaDon}</h3>
+                                <div className='listItem'>
+                                    <ul>
+                                    {
+                                        jsonObject.map((value,j) => (
+                                            <li key = {j}>Mã hàng: {value.IdSanPham}<br/>{value.TenSanPham}</li>
+
+                                        ))
+                                    }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        )
+                    })
+                }
+                
+            </div>
         </>
     )
 }

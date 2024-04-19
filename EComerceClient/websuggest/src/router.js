@@ -1,9 +1,11 @@
 import {Routes, Route} from 'react-router-dom';
 import HomePage from './pages/homePages';
-import { ROUTERS } from './utills/router';
+import { ROUTERS } from './utils/router';
 import MasterLayout from './pages/theme/masterLayout';
 import Cart from './pages/cartPages';
 import History from './pages/historyPages';
+import Product from './pages/productPages';
+
 
 
 const renderUserRouter = () => {
@@ -19,6 +21,10 @@ const renderUserRouter = () => {
         {
             path: ROUTERS.USER.HISTORY,
             component: <History/>
+        },
+        {
+            path: ROUTERS.USER.PRODUCTS_DETAIL,
+            component: <Product/>
         }
     ]
 
