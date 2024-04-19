@@ -62,4 +62,115 @@
         }
     }
 }
-    
+
+.featured-products {
+    margin-top: 50px;
+    .section-title{
+        margin-bottom: 50px;
+        text-align: center;
+        h2 {
+            position: relative;
+        }
+        h2:after{
+            position: absolute;
+            left: 0;
+            bottom: -15px;
+            right: 0;
+            height: 4px;
+            width: 80px;
+            background-color: map.get($theme-colors,'icon-color');
+            content: "";
+            margin: 0 auto;
+        }
+    }
+    .react-tabs{
+        ul{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        li {
+            list-style: none;   
+            font-size: 18px;
+            color: map.get($theme-colors,'main');
+            display: inline-block;
+            margin-right: 55px;
+            position: relative;
+            cursor: pointer;
+        }
+    }
+    .featured-item {
+        margin-bottom: 50px;
+        margin-left: 10px;
+        margin-right: 10px;
+        &:hover {
+            .featured-item-pic-hover{
+                bottom: 5% !important;
+                
+            }
+        }
+
+        .featured-item-pic {
+            height: 270px;
+            position: relative;
+            overflow: hidden;
+            background-position: center;
+            border-radius: 8px;
+            border: 1px solid map.get($theme-colors,'header');
+            background-repeat: no-repeat;
+            .featured-item-pic-hover {
+                position: absolute;
+                left: 0;
+                bottom: -40%;
+                width: 100%;
+                text-align: center;
+                transition: all 0.5s;
+                li {
+                    list-style: none;
+                    display: inline-block;
+                    margin-right: 10px;
+
+                    &:hover {
+                        svg {
+                            background: map.get($theme-colors,'main');
+                            color: map.get($theme-colors,'text-in-dark');
+                            border-color: map.get($theme-colors,'header');
+                            transform: rotate(360deg);
+                        }
+                    }
+
+                    svg {
+                        padding: 10px;
+                        height: 20px;
+                        width: 20px;
+                        border: 1px solid map.get($theme-colors,'header');
+                        background: map.get($theme-colors,'text-in-dark');
+                        color: map.get($theme-colors,'main');
+                        transition: all 0.3s;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+
+        .featured-item-text {
+            text-align: center;
+            h6 {
+                margin-top: 10px;
+                font-size: 16px;
+                font-weight: 400;
+                a {
+                    color: #000;
+                    text-decoration: none;
+
+                }
+            }
+            h5 {
+                color: map.get($theme-colors,'main');
+                font-size: 18px;
+                font-weight: 700;
+                margin-top: 10px;
+            }
+        }
+    }
+}

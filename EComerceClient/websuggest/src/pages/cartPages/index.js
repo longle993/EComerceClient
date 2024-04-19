@@ -55,7 +55,8 @@ const Cart = () => {
         isPay(false);
         const newCart = [];
         setCart(newCart);
-
+        setProducts([]);
+        setPrice(0);
     },[pay])
 
     return (

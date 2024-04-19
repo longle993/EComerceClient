@@ -17,8 +17,8 @@ const getProductById = async(idSP) => {
     return await get(`api/sanpham/get-product-by-id?id=${idSP}`);
 }
 
-const getSuggestProduct = async() => {
-    return await get('/api/sanpham/get-suggest-product');
+const getSuggestProduct = async(productId) => {
+    return await get(`/api/sanpham/get-suggest-product?productId=${productId}`);
 }
 
 const getFrequentProduct = async()=> {
