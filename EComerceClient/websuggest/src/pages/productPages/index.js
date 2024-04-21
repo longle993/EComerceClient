@@ -2,7 +2,7 @@ import { Link, resolvePath, useParams  } from 'react-router-dom';
 import './style.scss';
 import {memo, useEffect,useState} from 'react';
 import { formater } from 'utils/formater';
-import { getProductById,getSuggestProduct } from 'api/ProductsApi';
+import { getProductById,getSuggestProduct,getTop8Suggest } from 'api/ProductsApi';
 import Carousel from "react-multi-carousel";
 import { useCartContext } from 'utils/Context';
 import { FaShoppingCart    } from "react-icons/fa";
@@ -26,8 +26,9 @@ const Product = () => {
             setCount(cart.length);
             setPrice(price);
 
-            const responseSuggest = await getSuggestProduct(idSP);
-            const data = responseSuggest.data;
+            const responseSuggest = await getTop8Suggest(idSP);
+            const data = responseSuggest;
+            console.log(data);
             setSuggest(data)
           } catch (error) {
             console.error('Error fetching product data:', error);

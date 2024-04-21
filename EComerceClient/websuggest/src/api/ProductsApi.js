@@ -24,4 +24,8 @@ const getSuggestProduct = async(productId) => {
 const getFrequentProduct = async()=> {
     return await get ('/api/sanpham/get-frequence-product');
 }
-export{getAllProducts,getProductType, getProductByType,getProductById,getSuggestProduct, getFrequentProduct}
+
+const getTop8Suggest = async(productId) => {
+    return await get(`api/TMDT/danh-sach-phoi-hop/${productId}`);
+}
+export{getAllProducts,getProductType, getProductByType,getProductById,getSuggestProduct, getFrequentProduct,getTop8Suggest}
